@@ -94,13 +94,13 @@ public class HuffProcessor {
 	private HuffNode writeHeader(HuffNode reet, BitOutputStream y) {
 		HuffNode current = reet;
 		if (current.myLeft != null || current.myRight != null) {
-			y.writeBits(0, current.myValue);
+			y.writeBits(1, 0);
 			HuffNode left = writeHeader(current.myLeft, y);
 			HuffNode right = writeHeader(current.myRight, y);
 			return new HuffNode(0, 0, left, right);
 		}
 		else {
-			y.writeBits(1, current.myValue);
+			y.writeBits(1, 1);
 			y.writeBits(BITS_PER_WORD + 1, current.myValue);
 			return current;
 		}
