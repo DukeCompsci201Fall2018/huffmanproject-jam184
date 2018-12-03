@@ -56,8 +56,8 @@ public class HuffProcessor {
 		int[] rayray = new int[ALPH_SIZE + 1];
 		while (true) {
 			int val = x.readBits(BITS_PER_WORD);
-			rayray[val] += 1;
 			if (val == -1) break;
+			rayray[val] += 1;
 		}
 		rayray[PSEUDO_EOF] = 1;
 		return rayray;
