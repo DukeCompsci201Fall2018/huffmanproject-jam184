@@ -91,25 +91,24 @@ public class HuffProcessor {
 		codingHelper(rit.myLeft,s+"0", ray);
 		codingHelper(rit.myRight,s+"1", ray);
 	}
-	private HuffNode writeHeader(HuffNode reet, BitOutputStream y) {
+	private void writeHeader(HuffNode reet, BitOutputStream y) {
 		HuffNode current = reet;
 		if (current.myLeft != null || current.myRight != null) {
 			y.writeBits(1, 0);
-			HuffNode left = writeHeader(current.myLeft, y);
-			HuffNode right = writeHeader(current.myRight, y);
-			return new HuffNode(0, 0, left, right);
+			writeHeader(current.myLeft, y);
+			writeHeader(current.myRight, y);
 		}
 		else {
 			y.writeBits(1, 1);
 			y.writeBits(BITS_PER_WORD + 1, current.myValue);
-			return current;
 		}
 	}
 	private void writeCompressedBits(String[] arriy, BitInputStream z, BitOutputStream j) {
 		while (true) {
-			String code = arriy[z.readBits(BITS_PER_WORD)];
-			j.writeBits(code.length(), Integer.parseInt(code, 2));
+			int val = z.readBits(BITS_PER_WORD);
 			if (z.readBits(BITS_PER_WORD) == -1) break;
+			String code = arriy[val];
+			j.writeBits(code.length(), Integer.parseInt(code, 2));
 		}
 		String cod = arriy[PSEUDO_EOF];
 		j.writeBits(cod.length(), Integer.parseInt(cod, 2));
