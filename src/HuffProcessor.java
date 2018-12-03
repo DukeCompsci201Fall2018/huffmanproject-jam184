@@ -52,7 +52,7 @@ public class HuffProcessor {
 		writeCompressedBits(codings, in, out);
 		out.close();
 	}
-	public int[] readForCount(BitInputStream x) {
+	private int[] readForCount(BitInputStream x) {
 		int[] rayray = new int[ALPH_SIZE + 1];
 		while (true) {
 			int val = x.readBits(BITS_PER_WORD);
@@ -62,7 +62,7 @@ public class HuffProcessor {
 		rayray[PSEUDO_EOF] = 1;
 		return rayray;
 	}
-	public HuffNode makeTreeFromCounts(int[] array) {
+	private HuffNode makeTreeFromCounts(int[] array) {
 		PriorityQueue<HuffNode> pq = new PriorityQueue<>();
 		for (int i = 0; i < array.length; i++) {
 			if (array[i] > 0) {
@@ -78,12 +78,12 @@ public class HuffProcessor {
 		HuffNode root = pq.remove();
 		return root;
 	}
-	public String[]makeCodingsFromTree(HuffNode riit){
+	private String[]makeCodingsFromTree(HuffNode riit){
 		String[] encoding = new String[ALPH_SIZE + 1];
 		codingHelper(riit, "", encoding);
 		return encoding;
 	}
-	public void codingHelper(HuffNode rit, String s, String[] ray) {
+	private void codingHelper(HuffNode rit, String s, String[] ray) {
 		if (rit.myLeft == null && rit.myRight == null) {
 			ray[rit.myValue] = s;
 			return;
@@ -91,7 +91,7 @@ public class HuffProcessor {
 		codingHelper(rit.myLeft,s+"0", ray);
 		codingHelper(rit.myRight,s+"1", ray);
 	}
-	public HuffNode writeHeader(HuffNode reet, BitOutputStream y) {
+	private HuffNode writeHeader(HuffNode reet, BitOutputStream y) {
 		HuffNode current = reet;
 		if (current.myLeft != null || current.myRight != null) {
 			y.writeBits(0, current.myValue);
@@ -105,7 +105,7 @@ public class HuffProcessor {
 			return current;
 		}
 	}
-	public void writeCompressedBits(String[] arriy, BitInputStream z, BitOutputStream j) {
+	private void writeCompressedBits(String[] arriy, BitInputStream z, BitOutputStream j) {
 		while (true) {
 			String code = arriy[z.readBits(BITS_PER_WORD)];
 			j.writeBits(code.length(), Integer.parseInt(code, 2));
@@ -134,7 +134,7 @@ public class HuffProcessor {
 		
 		out.close();
 	}
-	public HuffNode readTreeHeader(BitInputStream x) {
+	private HuffNode readTreeHeader(BitInputStream x) {
 		//what to pass a parameter for readBits on line 73
 		int val = x.readBits(1);
 		if (val == -1) throw new HuffException("illegal header starts with " + val);
@@ -151,7 +151,7 @@ public class HuffProcessor {
 		}
 		
 	}
-	public void readCompressedBits(HuffNode riit, BitInputStream y, BitOutputStream z) {
+	private void readCompressedBits(HuffNode riit, BitInputStream y, BitOutputStream z) {
 		HuffNode current = riit;
 		while (true) {
 			int bits = y.readBits(1);
