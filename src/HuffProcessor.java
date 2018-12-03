@@ -92,15 +92,14 @@ public class HuffProcessor {
 		codingHelper(rit.myRight,s+"1", ray);
 	}
 	private void writeHeader(HuffNode reet, BitOutputStream y) {
-		HuffNode current = reet;
-		if (current.myLeft != null || current.myRight != null) {
+		if (reet.myLeft != null && reet.myRight != null) {
 			y.writeBits(1, 0);
-			writeHeader(current.myLeft, y);
-			writeHeader(current.myRight, y);
+			writeHeader(reet.myLeft, y);
+			writeHeader(reet.myRight, y);
 		}
 		else {
 			y.writeBits(1, 1);
-			y.writeBits(BITS_PER_WORD + 1, current.myValue);
+			y.writeBits(BITS_PER_WORD + 1, reet.myValue);
 		}
 	}
 	private void writeCompressedBits(String[] arriy, BitInputStream z, BitOutputStream j) {
