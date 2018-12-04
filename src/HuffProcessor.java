@@ -84,6 +84,9 @@ public class HuffProcessor {
 		return encoding;
 	}
 	private void codingHelper(HuffNode rit, String s, String[] ray) {
+		if (rit == null) {
+			throw new HuffException("root is null");
+		}
 		if (rit.myLeft == null && rit.myRight == null) {
 			ray[rit.myValue] = s;
 			return;
