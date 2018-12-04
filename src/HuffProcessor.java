@@ -66,7 +66,7 @@ public class HuffProcessor {
 		PriorityQueue<HuffNode> pq = new PriorityQueue<>();
 		for (int i = 0; i < array.length; i++) {
 			if (array[i] != 0) {
-				pq.add(new HuffNode(i, array[i]));
+				pq.add(new HuffNode(i, array[i], null, null));
 			}
 		}
 		while (pq.size() > 1) {
